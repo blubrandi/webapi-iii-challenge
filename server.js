@@ -25,7 +25,24 @@ server.get('/api/posts', (req, res, next) => {
         res.json(posts)
     })
     .catch(error => {
-        res.status(500).json({  error: err, message: 'The posts information could not be retrieved.' })
+        res.status(500).json({  error: err, message: 'Posts could not be retrieved.' })
+    })
+})
+
+// - GET all posts by id
+
+server.get('/api/posts/:id', (req, res, next) => {
+    const { id } = req.params
+    posts
+    .getById(id)
+    .then(post => {
+        if (post === 0) {
+            return res(404).json({ message: 'The post you\'re looking for cannot be found.' })
+        }
+        res.json(post)
+    })
+    .catch(error => {
+        res.status(500).json({  error: err, message: 'Posts could not be retrieved.' })
     })
 })
 
