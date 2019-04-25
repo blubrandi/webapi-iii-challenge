@@ -75,4 +75,18 @@ server.put('/api/posts/:id', (req, res) => {
     })
 })
 
+// - DELETE remove a post by ID
+
+server.delete('/api/posts/:id', (req, res) => {
+    const id = req.params.id
+    posts
+    .remove(id)
+    .then(post => {
+        res.json({ message: 'Your post has been removed' })
+    })
+    .catch(error => {
+        res.status(500).json({ error: error, message: 'Cannot remove post' })
+    })
+})
+
 module.exports = server
