@@ -22,10 +22,10 @@ router.get("/", (req, res, next) => {
     });
 });
 
-// - GET posts by id ***** NOT WORKING, TROUBLESHOOT *****
+// - GET posts by id
 
 router.get("/:id", (req, res, next) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
   posts
     .getById(id)
     .then(post => {
@@ -39,7 +39,7 @@ router.get("/:id", (req, res, next) => {
     .catch(error => {
       res
         .status(500)
-        .json({ error: error, message: "Posts could not be retrieved." });
+        .json({ error: error, message: "Post could not be retrieved." });
     });
 });
 
