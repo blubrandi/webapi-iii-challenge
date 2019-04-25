@@ -25,7 +25,7 @@ server.get('/api/posts', (req, res, next) => {
         res.json(posts)
     })
     .catch(error => {
-        res.status(500).json({  error: err, message: 'Posts could not be retrieved.' })
+        res.status(500).json({  error: error, message: 'Posts could not be retrieved.' })
     })
 })
 
@@ -42,11 +42,37 @@ server.get('/api/posts/:id', (req, res, next) => {
         res.json(post)
     })
     .catch(error => {
-        res.status(500).json({  error: err, message: 'Posts could not be retrieved.' })
+        res.status(500).json({  error: error, message: 'Posts could not be retrieved.' })
     })
 })
 
+// - POST add a post
 
+server.post('/api/posts', (req, res) => {
+    const { user_id, text } = req.body
+    posts
+    .insert({ user_id, text })
+    .then(post => {
+        res.json(post)
+    })
+    .catch(error => {
+        res.status(500).json({  error: error, message: 'Cannot add post' })
+    })
+})
 
+// - PUT change a post
+
+server.put('/api/posts/:id', (req, res) => {
+    const id = req.params.id
+    const { text } = req.body
+    posts
+    .update( id, { text } )
+    .then(post => {
+        res.json(post)
+    })
+    .catch(error => {
+        res.status(500).json({ error: error, message: 'Cannot update post'})
+    })
+})
 
 module.exports = server
