@@ -5,6 +5,11 @@ const users = require("../data/helpers/userDb");
 
 const router = express.Router();
 
+function capitalizeName(req, res, next) {
+  req.body.name = req.body.name.charAt[0].toUpperCase();
+  next();
+}
+
 //POSTS
 
 // - GET all posts
@@ -58,7 +63,7 @@ router.get("/user/:userId", (req, res) => {
 
 // - POST add a post
 
-router.post("/", (req, res) => {
+router.post("/", capitalizeName, (req, res) => {
   const { user_id, text } = req.body;
   posts
     .insert({ user_id, text })
@@ -72,7 +77,7 @@ router.post("/", (req, res) => {
 
 // - PUT change a post
 
-router.put("/:id", (req, res) => {
+router.put("/:id", capitalizeName, (req, res) => {
   const id = req.params.id;
   const { text } = req.body;
   posts
